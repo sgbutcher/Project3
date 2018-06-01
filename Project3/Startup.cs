@@ -50,7 +50,7 @@ namespace Project3
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Students/Error");
             }
 
             app.UseStaticFiles();
@@ -61,7 +61,7 @@ namespace Project3
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Students}/{action=Index}/{id?}");
             });
         }
     }

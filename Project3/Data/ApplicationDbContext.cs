@@ -22,5 +22,17 @@ namespace Project3.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Project3.Models.Bedaprogram> Bedaprogram { get; set; }
+
+        public DbSet<Project3.Models.Advisor> Advisor { get; set; }
+
+        public DbSet<Project3.Models.Goal> Goal { get; set; }
+
+        public DbSet<Project3.Models.Location> Location { get; set; }
+
+        public DbSet<Project3.Models.Note> Note { get; set; }
+
+        public DbSet<Project3.Models.Student> Student { get; set; }
     }
 }

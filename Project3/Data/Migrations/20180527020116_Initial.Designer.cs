@@ -11,9 +11,10 @@ using System;
 namespace Project3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180527020116_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,6 +209,24 @@ namespace Project3.Data.Migrations
                     b.ToTable("Bedaprogram");
                 });
 
+            modelBuilder.Entity("Project3.Models.Enrolled", b =>
+                {
+                    b.Property<int>("EnrolledID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("QuarterID");
+
+                    b.Property<int>("StudentID");
+
+                    b.HasKey("EnrolledID");
+
+                    b.HasIndex("QuarterID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("Enrolled");
+                });
+
             modelBuilder.Entity("Project3.Models.Goal", b =>
                 {
                     b.Property<int>("GoalID")
@@ -218,6 +237,22 @@ namespace Project3.Data.Migrations
                     b.HasKey("GoalID");
 
                     b.ToTable("Goal");
+                });
+
+            modelBuilder.Entity("Project3.Models.Instructor", b =>
+                {
+                    b.Property<int>("InstructorID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.HasKey("InstructorID");
+
+                    b.ToTable("Instructor");
                 });
 
             modelBuilder.Entity("Project3.Models.Location", b =>
@@ -238,15 +273,70 @@ namespace Project3.Data.Migrations
                     b.Property<int>("NoteID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AdvisorID");
+
                     b.Property<string>("Body");
 
                     b.Property<int>("StudentID");
 
                     b.HasKey("NoteID");
 
+                    b.HasIndex("AdvisorID");
+
                     b.HasIndex("StudentID");
 
                     b.ToTable("Note");
+                });
+
+            modelBuilder.Entity("Project3.Models.Quarter", b =>
+                {
+                    b.Property<int>("QuarterID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code")
+                        .IsRequired();
+
+                    b.HasKey("QuarterID");
+
+                    b.ToTable("Quarter");
+                });
+
+            modelBuilder.Entity("Project3.Models.Quarterlyenrollment", b =>
+                {
+                    b.Property<int>("QuarterlyenrollmentID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CCCreditsEarned");
+
+                    b.Property<string>("CatalogListing");
+
+                    b.Property<string>("CourseCode");
+
+                    b.Property<string>("CourseDescription");
+
+                    b.Property<int>("CreditsEarned");
+
+                    b.Property<string>("GradeEarned");
+
+                    b.Property<int>("HS21CreditsEarned");
+
+                    b.Property<int>("InstructorID");
+
+                    b.Property<int>("QuarterID");
+
+                    b.Property<int>("StudentID");
+
+                    b.Property<string>("SubjectGroup");
+
+                    b.HasKey("QuarterlyenrollmentID");
+
+                    b.HasIndex("InstructorID");
+
+                    b.HasIndex("QuarterID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("Quarterlyenrollment");
                 });
 
             modelBuilder.Entity("Project3.Models.Student", b =>
@@ -337,10 +427,46 @@ namespace Project3.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Project3.Models.Enrolled", b =>
+                {
+                    b.HasOne("Project3.Models.Quarter", "Quarter")
+                        .WithMany()
+                        .HasForeignKey("QuarterID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project3.Models.Student", "Student")
+                        .WithMany("EnrolledQuarters")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Project3.Models.Note", b =>
                 {
+                    b.HasOne("Project3.Models.Advisor", "Advisor")
+                        .WithMany()
+                        .HasForeignKey("AdvisorID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Project3.Models.Student", "Student")
                         .WithMany("Notes")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Project3.Models.Quarterlyenrollment", b =>
+                {
+                    b.HasOne("Project3.Models.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project3.Models.Quarter", "Quarter")
+                        .WithMany()
+                        .HasForeignKey("QuarterID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project3.Models.Student", "Student")
+                        .WithMany("Quarterlyenrollments")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

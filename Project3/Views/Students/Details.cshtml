@@ -1,0 +1,96 @@
+﻿@model Project3.Models.Student
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Intake)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Intake)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Registration)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Registration)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Advisor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Advisor.FirstName) @Html.DisplayFor(model => model.Advisor.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bedaprogram)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bedaprogram.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Goal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Goal.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
+        <dt>
+            Notes
+        </dt>
+            @foreach (var item in Model.Notes)
+            {
+                <dd>
+                @if (item.StudentID == Model.StudentID)
+                {
+                    @Html.DisplayFor(modelItem => item.Body)
+                }
+                </dd>
+            }  
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.StudentID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
