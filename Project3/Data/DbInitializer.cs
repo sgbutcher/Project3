@@ -13,7 +13,7 @@ namespace Project3.Data
             context.Database.EnsureCreated();
 
             // Look for any students.
-            if (context.Student.Any())
+            if (context.Location.Any())
             {
                 return;   // DB has been seeded
             }
@@ -57,17 +57,6 @@ namespace Project3.Data
                 context.Advisor.Add(s);
             }
             context.SaveChanges();
-
-            var students = new Student[]
-            {
-            new Student{FirstName="Example",LastName="Student",PhoneNumber="555-555-5555", Email="winter@blazer.net", Intake=DateTime.Parse("6/27/2017"), Registration=DateTime.Parse("9/1/2017"), SID="000-00-0000" }
-            };
-            foreach (Student s in students)
-            {
-                context.Student.Add(s);
-            }
-            context.SaveChanges();
-
         }
     }
 }
